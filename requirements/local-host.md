@@ -75,6 +75,7 @@ local:
 - **MF-LOC-043 (MUST)** The monitor MUST run on the host it measures (host-local), with a pull/export interface; it MUST NOT depend on one central SSH host being reachable.
 - **MF-LOC-044 (SHOULD)** Alerts MUST reach the admin through at least one channel that works offline on the LAN (local log + desktop/terminal notification), with optional remote channels.
 - **MF-LOC-045 (MUST)** Installing anything persistent on a host (unit, cron, rc.conf change) MUST be an explicit admin approval step, shown as a diff first.
+- **MF-LOC-046 (MUST)** On an unattended host (phones, a headless FreeBSD box, etc.), owner approval MUST be obtained, personally from the owner (Brian), for any persistent install. Local approval (MF-LOC-045) and a signed federated approval (MF-FED-040) MAY still be required in addition, but neither substitutes for owner approval. *Rationale:* open question Q1, resolved by Brian 2026-10-28. *Accept:* an install on an unattended host with local + federated approval but no owner approval is refused.
 
 ### 3.6 Offline and degraded operation
 - **MF-LOC-050 (MUST)** A host MUST keep running local services and local-only edges indefinitely while partitioned; only cross-host edges may expire (agreed with A).
@@ -110,7 +111,7 @@ local:
 - **MF-LOC-091 (SHOULD)** Host snapshot/restore (Termux snapshots, Virtu domain snapshots, ZFS on FreeBSD) SHOULD be declared so recovery is local-first.
 
 ## 6. Acceptance summary for the "always-on" lesson
-A feature tagged `autostart: required` is done only when, on each supported platform: (1) install creates the supervisor entry after admin approval, (2) reboot → running within 60 s with no human, (3) kill -9 → restarted, (4) 5 fast crashes → stopped + alert, (5) uninstall removes it.
+A feature tagged `autostart: required` is done only when, on each supported platform: (1) install creates the supervisor entry after admin approval (and owner approval on unattended hosts, MF-LOC-046), (2) reboot → running within 60 s with no human, (3) kill -9 → restarted, (4) 5 fast crashes → stopped + alert, (5) uninstall removes it.
 
 ## Appendix A. Survey of current state (local-machine angle, 2026-10-28)
 

@@ -2,7 +2,7 @@
 
 Each is tracked as a GitHub issue. Q1 is the only joint question both perspectives raised.
 
-1. **[awaiting Brian] Who approves persistent installs on unattended hosts (phones, a headless FreeBSD box)?** Joint proposal: a remote-initiated install needs BOTH the host's local approval (MF-LOC-045) AND a signed federated approval (MF-FED-040); a locally initiated install needs local approval only. (MF-LOC-040, 045)
+1. **[RESOLVED 2026-10-28 by Brian] Who approves persistent installs on unattended hosts (phones, a headless FreeBSD box)?** Answer: the owner (Brian) MUST personally approve every persistent install on an unattended host (RFC 2119 MUST). The host's local approval (MF-LOC-045) and a signed federated approval (MF-FED-040) MAY still be required in addition, but neither substitutes for owner approval. (MF-LOC-040, 045, 046; MF-FED-042)
 2. Reference OpenPGP stack: Sequoia (RFC 9580) or GnuPG? Affects smartcards on FreeBSD and Termux. (MF-FED-010, 013)
 3. Bridging Kerberos and WoT: map `svc/host@REALM` to an OpenPGP UID via a signed directory attribute, or via a separate bridge keyring? (MF-FED-020, 022)
 4. Lattice components: are realm-path and tagset enough, or are numeric confidentiality levels (classic MLS) needed? (MF-FED-030)

@@ -95,6 +95,8 @@ local: {}   # owned by worker B
 
 **MF-FED-041 (MUST) Consent separate from admin.** In line with Rakazo's VISION ("app accounts never administer the server"), being an operator or admin MUST NOT imply consent on behalf of the owner's data. These are distinct signer roles.
 
+**MF-FED-042 (MUST) Owner approval for persistent installs on unattended hosts.** Owner approval MUST be obtained, personally from the owner (Brian), for any persistent install (service unit, rc.d/cron/Termux:Boot entry, rc.conf change) on an unattended host such as a phone or headless FreeBSD box. The host's local approval (MF-LOC-045) and a signed federated approval (MF-FED-040) MAY still be required in addition, but neither substitutes for owner approval, and admin or federation signatures MUST NOT be accepted in its place (MF-FED-041). Resolves open question Q1 (2026-10-28).
+
 ## 6. Discovery
 
 **MF-FED-050 (MUST) Discovery is advisory, the graph is authoritative.** Hosts MAY be found by mDNS/DNS-SD, ARP, or a directory lookup. A discovered host is only a *candidate* until it's in the signed graph. Discovery MUST NOT open edges.
