@@ -1,0 +1,34 @@
+# Illustrative only, not normative. Real addresses, accounts and secrets go in host.local.yaml (never committed).
+schema: meshforge/v0.1
+project: familia
+federation:                       # MF-FED-*
+  identity: {kind: openpgp, fingerprint_ref: overlay:project_key}
+  partition_modes: [wot, kerberos, hybrid]
+  provides:
+    - {service: coder, iface: http+openapi, iface_version: "1.0", spec: openapi/llama-server.yaml, label: "integrity:lan/fleet"}
+  requires:
+    - {iface: artifact-swarm, proto: bittorrent-private}
+  consent: {default: deny, records: signed}
+  audit: {sink: append-only, signed: true}
+  health: {kind: pull, path: /health, interval_s: 30}
+  recovery_verbs: [drain, restart, snapshot, restore]
+local:                            # MF-LOC-*
+  platforms:
+    - {os: linux, tier: supported}
+    - {os: freebsd, tier: manual}
+    - {os: termux, tier: supported}
+    - {os: windows, tier: untested}
+  dependencies:
+    - {name: python3, min: "3.10"}
+    - {name: pyyaml, kind: python, required_for: [tests, validate]}
+  services:
+    - id: coder
+      kind: model-server
+      start: {argv_template: "llama-server ...", must_include: ["--tools"]}
+      autostart: required
+      resources: {ram_mib: {min: 2048, max: 9000}, cpu: {cores: 4}, gpu: optional, disk_mib: 6000}
+      network: {bind: loopback, ports: [18200]}
+      enforcement: {tier_min: contained, capabilities: [net.bind.loopback, "fs.read:models"], on_low_read: demote}
+      health: {http: /health, expect: 200, interval_s: 30}
+  host_reserve: {ram_mib: 2048}
+  probes: [cpu, mem, swap, load, gpu, disk, procs, ports, os, kernel_mac]
